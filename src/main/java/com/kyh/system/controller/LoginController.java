@@ -23,7 +23,8 @@ public class LoginController {
 
 	@GetMapping("/")
     public RedirectView redirectToLogin() {
-        return new RedirectView("/login/");
+//        return new RedirectView("/login/");
+        return new RedirectView("/syainmanagement");
     }
 
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
