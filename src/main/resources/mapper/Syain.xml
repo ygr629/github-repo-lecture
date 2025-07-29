@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyh.system.mapper.SyainMapper">
+    
+    <select id="selectSyainById" resultType="com.kyh.system.model.Syain">
+        SELECT 
+        	FIRST_NAME_KANJI, 
+        	LAST_NAME_KANJI, 
+        	SYOZOKU_KAISYA, 
+        	SEIBETU,
+        	SYOKUGYO_KIND,
+        	NYUUSYA_DATE,
+        	TAISYA_DATE
+        FROM SYAIN_MAIN 
+        WHERE SYAIN_ID = #{id}
+    </select>
+	<select id="selectAllSyainWithFilter" resultType="com.kyh.system.model.Syain">
+	    SELECT * FROM syain_main
+	    <where>
+	        <if test="syokugyoKind != null and syokugyoKind != ''">
+	            AND SYOKUGYO_KIND = #{syokugyoKind}
+	        </if>
+	        <if test="syozokuKaisya != null and syozokuKaisya != ''">
+	            AND SYOZOKU_KAISYA = #{syozokuKaisya}
+	        </if>
+	        <if test="syainName != null and syainName != ''">
+            	AND FIRST_NAME_KANJI LIKE CONCAT('%', #{syainName}, '%')
+            	OR LAST_NAME_KANJI LIKE CONCAT('%', #{syainName}, '%')
+	        </if>
+			<choose>
+				<when test="zaisekiNum == 1">
+					AND TAISYA_DATE IS NULL
+				</when>
+				<when test="zaisekiNum == 2">
+					AND TAISYA_DATE IS NOT NULL
+				</when>
+			</choose>
+	    </where>
+	</select>
+	
+</mapper>
+
+<!--List<Syain> getFilteredSyainList(Integer syokugyoKind, Integer syozokuKaisya, String syainName, Integer zaisekiNum);-->

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyh.system.mapper.ManagementMapper">
+    
+    <select id="selectManagementById" resultType="com.kyh.system.model.Management">
+        SELECT * FROM tg_setting 
+        WHERE category1 = #{category1} and
+        category2 = #{category2} and
+        category3 = #{category3}
+    </select>
+
+</mapper>
