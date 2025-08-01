@@ -276,7 +276,9 @@
 <!--					        <td><a href="#">登録</a></td>-->
 					        <td>
 								<a th:href="@{'/update/' + ${syain.syainId}}">更新</a> <br>
-								<a th:href="@{'/delete/' + ${syain.syainId}}">削除</a> 
+								<a th:href="@{'/delete/' + ${syain.syainId}}"
+								       th:data-employee-name="|${syain.lastNameKanji} ${syain.firstNameKanji}|"
+								        onclick="return confirm(this.getAttribute('data-employee-name') + 'を削除してもよろしいですか？');">削除</a>
 							</td>
 					    </tr>
 					</tbody>

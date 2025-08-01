@@ -26,6 +26,13 @@ public class SyainController {
 	@Autowired
 	private ManagementService managementService;
 	
+	@GetMapping("/delete/{id}")
+	public String deleteSyain(@PathVariable("id") Integer syainId) {
+	    syainService.deleteSyainById(syainId);
+	    return "redirect:/syainmanagement";
+	}
+	
+	
 	@GetMapping("/update/{syainId}")
 	public String updateUser(@PathVariable int syainId, Model model) {
 	    Syain syain = syainService.getSyainById(syainId);

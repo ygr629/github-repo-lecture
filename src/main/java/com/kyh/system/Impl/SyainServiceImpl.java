@@ -25,5 +25,11 @@ public class SyainServiceImpl implements SyainService{
 	public List<Syain> getFilteredSyainList(Integer syokugyoKind, Integer syozokuKaisya, String syainName, Integer zaisekiNum) {
 	    return syainMapper.selectAllSyainWithFilter(syokugyoKind,syozokuKaisya,syainName, zaisekiNum);
 	}
+	@Override
+	public void deleteSyainById(Integer syainId) {
+	    syainMapper.deleteSyainById(syainId);
+		
+		
+	}
 
 }

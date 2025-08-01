@@ -40,7 +40,9 @@
 			</choose>
 	    </where>
 	</select>
-	
+	<delete id="deleteSyainById" parameterType="int">
+    	DELETE FROM SYAIN_MAIN WHERE SYAIN_ID = #{id}
+	</delete>
 </mapper>
 
 <!--List<Syain> getFilteredSyainList(Integer syokugyoKind, Integer syozokuKaisya, String syainName, Integer zaisekiNum);-->

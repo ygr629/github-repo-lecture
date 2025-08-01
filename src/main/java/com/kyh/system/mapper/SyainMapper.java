@@ -16,5 +16,6 @@ public interface SyainMapper {
 			String syainName,
 			Integer zaisekiNum
             );
+    void deleteSyainById(Integer syainId);
 
 }
