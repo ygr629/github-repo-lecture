@@ -49,13 +49,20 @@
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>2.2.0</version>  <!-- MyBatis のバージョンを指定 -->
 		</dependency>
+		
+		<!-- PostgreSQL の JDBC ドライバ -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.3.8</version>
+		</dependency>
 
 		<!-- MySQL の JDBC ドライバ（MySQL データベースに接続するためのドライバ） -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version>  <!-- 使用する MySQL ドライバのバージョン -->
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>mysql</groupId>-->
+<!--			<artifactId>mysql-connector-java</artifactId>-->
+<!--			<version>8.0.33</version>   使用する MySQL ドライバのバージョン -->
+<!--		</dependency>-->
 
 		<!-- Spring Boot の Thymeleaf スターター（Thymeleaf テンプレートエンジンを使ったビューのレンダリング） -->
 		<dependency>
