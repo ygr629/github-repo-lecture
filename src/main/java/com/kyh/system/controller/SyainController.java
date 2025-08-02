@@ -1,17 +1,24 @@
 package com.kyh.system.controller;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kyh.system.model.Management;
 import com.kyh.system.model.Syain;
 import com.kyh.system.service.ManagementService;
 import com.kyh.system.service.SyainService;
@@ -39,12 +46,47 @@ public class SyainController {
 	    model.addAttribute("syain", syain);
 	    return "common/update";
 	}
+	
 
-	@RequestMapping(value = "/syainRegist", method=RequestMethod.GET)
-	public String RegistUser(){
+//	登録画面
+    @GetMapping("/syainRegist")
+    public String showRegistPage(Model model) {
+
+		Map<String, String> attributes = new LinkedHashMap<>();
+
+		attributes.put("kaisha1", managementService.getManagementById(1, 1, 1).getValue1());
+		attributes.put("kaisha2", managementService.getManagementById(1, 2, 1).getValue1());
+
+		for (int i = 1; i <= 6; i++) {
+		    attributes.put("shokugyo" + i, managementService.getManagementById(3, 4, i).getValue1());
+		}
 		
+		List<Map<String, Object>> osList = new ArrayList<>();
+		int i = 1;
+		while (true) {
+		    Management m = managementService.getManagementById(3, 6, i);
+		    if (m == null || m.getValue1() == null) break;
+
+		    Map<String, Object> osMap = new HashMap<>();
+		    osMap.put("id", i);  
+		    osMap.put("name", m.getValue1());
+		    osList.add(osMap);
+		    i++;
+		}
+		model.addAttribute("osList", osList);
+		model.addAllAttributes(attributes);
+
+    	
 		return "common/regist";
-	}
+    }
+
+
+    @PostMapping("/syainRegist")
+    public String registerSyain(@ModelAttribute Syain form) {
+    	System.out.println(form);
+        syainService.save(form);
+	    return "redirect:/syainmanagement";
+    }
 	
 	@RequestMapping(value = "/syainmanagement", method=RequestMethod.GET)
 	public String searchSyain(
@@ -76,18 +118,17 @@ public class SyainController {
 		model.addAttribute("syainList",syainList);
 		model.addAttribute("syainListSize",syainList.size());
 		
-		model.addAttribute("kaisha1", managementService.getManagementById(1,1,1).getValue1());
-		model.addAttribute("kaisha2", managementService.getManagementById(1,2,1).getValue1());
-		model.addAttribute("shokugyo1", managementService.getManagementById(3,4,1).getValue1());
-		model.addAttribute("shokugyo2", managementService.getManagementById(3,4,2).getValue1());
-		model.addAttribute("shokugyo3", managementService.getManagementById(3,4,3).getValue1());
-		model.addAttribute("shokugyo4", managementService.getManagementById(3,4,4).getValue1());
-		model.addAttribute("shokugyo5", managementService.getManagementById(3,4,5).getValue1());
-		model.addAttribute("shokugyo6", managementService.getManagementById(3,4,6).getValue1());
-		
-		
-//		System.out.println(syainService.getSyainById(param));
-//		System.out.println(managementService.getManagementById(1,2,1));
+		Map<String, String> attributes = new LinkedHashMap<>();
+
+		attributes.put("kaisha1", managementService.getManagementById(1, 1, 1).getValue1());
+		attributes.put("kaisha2", managementService.getManagementById(1, 2, 1).getValue1());
+
+		for (int i = 1; i <= 6; i++) {
+		    attributes.put("shokugyo" + i, managementService.getManagementById(3, 4, i).getValue1());
+		}
+
+		model.addAllAttributes(attributes);
+
 		return "common/search";
 	}
 

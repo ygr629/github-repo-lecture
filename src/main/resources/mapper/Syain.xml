@@ -13,10 +13,20 @@
         	SEIBETU,
         	SYOKUGYO_KIND,
         	NYUUSYA_DATE,
-        	TAISYA_DATE
+        	TAISYA_DATE,
+		    KINYUKIKAN_CODE,
+		    KINYUKIKAN_NAME,
+		    SITEN_CODE,
+		    SITEN_NAME,
+		    KOUZA_KIND,
+		    KOUZA_NUM,
+		    MEIGI_NAME,
+		    IT_OS,
+		    EMPLOYEECODE
         FROM SYAIN_MAIN 
         WHERE SYAIN_ID = #{id}
     </select>
+    
 	<select id="selectAllSyainWithFilter" resultType="com.kyh.system.model.Syain">
 	    SELECT * FROM syain_main
 	    <where>
@@ -40,6 +50,21 @@
 			</choose>
 	    </where>
 	</select>
+	
+	<insert id="saveSyain" >
+	    INSERT INTO SYAIN_MAIN (
+	        FIRST_NAME_KANJI, LAST_NAME_KANJI, SEIBETU, 
+	        SYOZOKU_KAISYA, NYUUSYA_DATE, TAISYA_DATE, SYOKUGYO_KIND,
+	        KINYUKIKAN_CODE, KINYUKIKAN_NAME, SITEN_CODE, SITEN_NAME,
+	        KOUZA_KIND, KOUZA_NUM, MEIGI_NAME, EMPLOYEECODE, IT_OS
+	    ) VALUES (
+	        #{firstNameKanji}, #{lastNameKanji}, #{seibetu}, 
+	        #{syozokuKaisya}, #{nyuusyaDate}, #{taisyaDate}, #{syokugyoKind},
+	        #{kinyukikanCode}, #{kinyukikanName}, #{sitenCode}, #{sitenName},
+	        #{kouzaKind}, #{kouzaNum}, #{meigiName}, #{employeeCode}, #{itOs}
+	    )
+	</insert>
+	
 	<delete id="deleteSyainById" parameterType="int">
     	DELETE FROM SYAIN_MAIN WHERE SYAIN_ID = #{id}
 	</delete>

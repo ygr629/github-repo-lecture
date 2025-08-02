@@ -31,5 +31,11 @@ public class SyainServiceImpl implements SyainService{
 		
 		
 	}
+	@Override
+	public void save(Syain form) {
+		syainMapper.saveSyain(form);
+		
+		
+	}
 
 }
