@@ -10,4 +10,5 @@ public interface SyainService {
 	List<Syain> getFilteredSyainList(Integer syokugyoKind, Integer syozokuKaisya, String syainName, Integer zaisekiNum);
 	public void deleteSyainById(Integer syainId);
 	public void save(Syain form);
+	public void update(Syain form);
 }

@@ -17,7 +17,6 @@ public class SyainServiceImpl implements SyainService{
 	
 	@Override
 	public Syain getSyainById(Integer id) {
-		// TODO 自動生成されたメソッド・スタブ
 		System.out.println(id);
 		return syainMapper.selectSyainById(id);
 	}
@@ -35,6 +34,11 @@ public class SyainServiceImpl implements SyainService{
 	public void save(Syain form) {
 		syainMapper.saveSyain(form);
 		
+		
+	}
+	@Override
+	public void update(Syain form) {
+		syainMapper.updateSyain(form);
 		
 	}
 

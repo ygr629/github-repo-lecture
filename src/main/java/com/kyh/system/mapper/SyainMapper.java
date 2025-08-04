@@ -20,4 +20,6 @@ public interface SyainMapper {
     
     void saveSyain(Syain syain);
 
+	void updateSyain(Syain syain);
+
 }

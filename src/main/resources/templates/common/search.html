@@ -312,6 +312,105 @@
 	            event.preventDefault(); 
 	        }
 	    });
+		document.getElementById('registForm').addEventListener('submit', function(event) {
+		   // packOS 실행 → osInput 채워줌
+		   packOS();
+
+		   const employeeCode = document.getElementById('employee-Code').value.trim();
+		   const lastNameKanji = document.getElementById('lastNameKanji').value.trim();
+		   const firstNameKanji = document.getElementById('firstNameKanji').value.trim();
+
+		   const maxLen = 15; // 빠진 변수 정의
+		   const kanjiRegex = /^[\u4E00-\u9FFF\u3040-\u30FFー　]+$/;
+
+		   if (employeeCode === '') {
+		     alert('社員コードを入力してください。');
+		     event.preventDefault();
+		     return;
+		   }
+
+		   if (lastNameKanji === '') {
+		     alert('姓を入力してください。');
+		     event.preventDefault();
+		     return;
+		   }
+
+		   if (firstNameKanji === '') {
+		     alert('名を入力してください。');
+		     event.preventDefault();
+		     return;
+		   }
+
+		   if (!kanjiRegex.test(lastNameKanji)) {
+		     alert('姓は全角で入力してください。');
+		     event.preventDefault();
+		     return;
+		   }
+
+		   if (!kanjiRegex.test(firstNameKanji)) {
+		     alert('名は全角で入力してください。');
+		     event.preventDefault();
+		     return;
+		   }
+
+		   if (employeeCode.length > 10) {
+		     alert(`社員コードは10文字以下で入力してください。`);
+		     event.preventDefault();
+		     return;
+		   }
+
+		   if (lastNameKanji.length > maxLen) {
+		     alert(`姓は${maxLen}文字以下で入力してください。`);
+		     event.preventDefault();
+		     return;
+		   }
+
+		   if (firstNameKanji.length > maxLen) {
+		     alert(`名は${maxLen}文字以下で入力してください。`);
+		     event.preventDefault();
+		     return;
+		   }
+
+		   // 기타 항목 유효성 검사
+		   const fields = [
+		     { id: 'bank_code', label: '金融機関コード', required: true, type: 'numeric', max: 10 },
+		     { id: 'bank_name', label: '金融機関名', required: true, type: 'zenkaku', max: 50 },
+		     { id: 'branch_code', label: '支店名コード', required: true, type: 'numeric', max: 10 },
+		     { id: 'branch_name', label: '支店名', required: true, type: 'zenkaku', max: 50 },
+		     { id: 'account_number', label: '口座番号', required: false, type: 'numeric', max: 10 },
+		     { id: 'account_holder', label: '名義人', required: false, type: 'zenkaku', max: 50 }
+		   ];
+
+		   for (let field of fields) {
+		     const value = document.getElementById(field.id).value.trim();
+
+		     if (field.required && value === '') {
+		       alert(`${field.label}を入力してください。`);
+		       event.preventDefault();
+		       return;
+		     }
+
+		     if (value !== '') {
+		       if (field.type === 'numeric' && !/^\d+$/.test(value)) {
+		         alert(`${field.label}は数字のみで入力してください。`);
+		         event.preventDefault();
+		         return;
+		       }
+
+		       if (field.type === 'zenkaku' && /[^\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFFー]/.test(value)) {
+		         alert(`${field.label}は全角で入力してください。`);
+		         event.preventDefault();
+		         return;
+		       }
+
+		       if (value.length > field.max) {
+		         alert(`${field.label}は${field.max}文字以下で入力してください。`);
+		         event.preventDefault();
+		         return;
+		       }
+		     }
+		   }
+		});
 	</script>
 
 </html>

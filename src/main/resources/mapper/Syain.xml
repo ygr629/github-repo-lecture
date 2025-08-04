@@ -7,6 +7,7 @@
     
     <select id="selectSyainById" resultType="com.kyh.system.model.Syain">
         SELECT 
+        	SYAIN_ID,
         	FIRST_NAME_KANJI, 
         	LAST_NAME_KANJI, 
         	SYOZOKU_KAISYA, 
@@ -64,6 +65,28 @@
 	        #{kouzaKind}, #{kouzaNum}, #{meigiName}, #{employeeCode}, #{itOs}
 	    )
 	</insert>
+	<update id="updateSyain" parameterType="Syain">
+	    UPDATE SYAIN_MAIN
+	    SET
+	        FIRST_NAME_KANJI = #{firstNameKanji},
+	        LAST_NAME_KANJI = #{lastNameKanji},
+	        SEIBETU = #{seibetu},
+	        SYOZOKU_KAISYA = #{syozokuKaisya},
+	        NYUUSYA_DATE = #{nyuusyaDate},
+	        TAISYA_DATE = #{taisyaDate},
+	        SYOKUGYO_KIND = #{syokugyoKind},
+	        KINYUKIKAN_CODE = #{kinyukikanCode},
+	        KINYUKIKAN_NAME = #{kinyukikanName},
+	        SITEN_CODE = #{sitenCode},
+	        SITEN_NAME = #{sitenName},
+	        KOUZA_KIND = #{kouzaKind},
+	        KOUZA_NUM = #{kouzaNum},
+	        MEIGI_NAME = #{meigiName},
+	        EMPLOYEECODE = #{employeeCode},
+	        IT_OS = #{itOs}
+	    WHERE
+	        SYAIN_ID = #{syainId}
+	</update>
 	
 	<delete id="deleteSyainById" parameterType="int">
     	DELETE FROM SYAIN_MAIN WHERE SYAIN_ID = #{id}

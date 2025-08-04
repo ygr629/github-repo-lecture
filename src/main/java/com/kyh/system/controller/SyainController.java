@@ -39,13 +39,64 @@ public class SyainController {
 	    return "redirect:/syainmanagement";
 	}
 	
-	
+
+//	更新画面
 	@GetMapping("/update/{syainId}")
-	public String updateUser(@PathVariable int syainId, Model model) {
+	public String showUpdateSyain(@PathVariable int syainId, Model model) {
 	    Syain syain = syainService.getSyainById(syainId);
+	    
 	    model.addAttribute("syain", syain);
-	    return "common/update";
+	    
+	    Map<Integer, Integer> osSelectionMap = new HashMap<>();
+
+	    if(syain.getItOs() != null && !syain.getItOs().isEmpty()) {
+	        String[] parts = syain.getItOs().split(",");
+	        for(String part : parts) {
+	            String[] split = part.split("-");
+	            if(split.length == 2) {
+	                try {
+	                    int osId = Integer.parseInt(split[0]);
+	                    int selection = Integer.parseInt(split[1]);
+	                    osSelectionMap.put(osId, selection);
+	                } catch(NumberFormatException e) {
+	                }
+	            }
+	        }
+	    }
+
+	    // 모델에 추가
+	    model.addAttribute("osSelectionMap", osSelectionMap);
+	    
+		Map<String, String> attributes = new LinkedHashMap<>();
+
+		attributes.put("kaisha1", managementService.getManagementById(1, 1, 1).getValue1());
+		attributes.put("kaisha2", managementService.getManagementById(1, 2, 1).getValue1());
+
+		for (int i = 1; i <= 6; i++) {
+		    attributes.put("shokugyo" + i, managementService.getManagementById(3, 4, i).getValue1());
+		}
+		model.addAllAttributes(attributes);
+		List<Map<String, Object>> osList = new ArrayList<>();
+		int i = 1;
+		while (true) {
+		    Management m = managementService.getManagementById(3, 6, i);
+		    if (m == null || m.getValue1() == null) break;
+
+		    Map<String, Object> osMap = new HashMap<>();
+		    osMap.put("id", i);  
+		    osMap.put("name", m.getValue1());
+		    osList.add(osMap);
+		    i++;
+		}
+		model.addAttribute("osList", osList);
+		return "common/update";
 	}
+	
+    @PostMapping("/syainUpdate")
+    public String pdateSyain(@ModelAttribute Syain form) {
+        syainService.update(form);
+	    return "redirect:/syainmanagement";
+    }
 	
 
 //	登録画面
@@ -83,7 +134,6 @@ public class SyainController {
 
     @PostMapping("/syainRegist")
     public String registerSyain(@ModelAttribute Syain form) {
-    	System.out.println(form);
         syainService.save(form);
 	    return "redirect:/syainmanagement";
     }
